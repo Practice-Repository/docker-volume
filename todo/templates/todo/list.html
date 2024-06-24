@@ -1,0 +1,19 @@
+{% extends "todo/layout.html" %}
+{% load static %}
+{% block content %}
+    <main>
+        <h1>To Do List</h1>
+        <a href="{% url 'todo:add' %}">追加</a>
+        {% for task in tasks %}
+            <div class="task" style="display: inline-block; width: 100%; margin-top: 30px">
+                <p style="width: fit-content;">{{ task.title }}</p>
+                <form action="{% url 'todo:delete' task.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">完了</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>タスクはありません。</p>
+        {% endfor %}
+    </main>
+{% endblock content %}
